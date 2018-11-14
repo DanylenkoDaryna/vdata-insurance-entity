@@ -54,8 +54,6 @@ public class InsuredPerson implements Comparable {
      */
     public String outFIO(String name) {
         String[] res = name.split(" ");
-
-
         return res[0] + " " + res[1].charAt(0) + "." + res[2].charAt(0) + ".";
     }
 
