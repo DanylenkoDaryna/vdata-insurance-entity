@@ -2,6 +2,7 @@
 # vdata-insurance-entity
 Practice two java
 
+
 Для реализованной ранее структуры классов (https://github.com/MrObjectMain/vdata-insurance-info) 
 необходимо добавить возможность подсчета стоимости страховки по договору 
 используя различные варианты обхода списка.

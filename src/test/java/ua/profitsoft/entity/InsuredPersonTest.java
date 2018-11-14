@@ -15,6 +15,7 @@ public class InsuredPersonTest {
         InsuredPerson actual = new InsuredPerson(3, "Kovalenko Ivan Nikolaevich", LocalDate.of(1993,
                 12, 9), 45);
         String expected = "Kovalenko I.N.";
+
         Assert.assertEquals(expected, actual.outFIO(actual.getFlname()));
     }
 }
