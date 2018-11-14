@@ -12,8 +12,9 @@ import java.time.LocalDate;
 public class InsuredPerson implements Comparable {
     private int id;
     private String flname;
-    private double personalCost;
     private LocalDate btdate;
+    private double personalCost;
+
 
     public InsuredPerson() {
 
@@ -53,6 +54,7 @@ public class InsuredPerson implements Comparable {
      */
     public String outFIO(String name) {
         String[] res = name.split(" ");
+        System.out.println(res[0] + " " + res[1].charAt(0) + "." + res[2].charAt(0) + ".");
         return res[0] + " " + res[1].charAt(0) + "." + res[2].charAt(0) + ".";
     }
 
