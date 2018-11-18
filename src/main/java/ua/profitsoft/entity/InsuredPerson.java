@@ -1,5 +1,6 @@
 package ua.profitsoft.entity;
 
+import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
@@ -9,14 +10,22 @@ import java.time.LocalDate;
  *
  * @author Daryna
  */
-public class InsuredPerson implements Comparable {
+public class InsuredPerson implements Comparable, Serializable {
     private int id;
     private String flname;
     private LocalDate btdate;
     private double personalCost;
 
 
+    /**
+     * Constructs a new Insured Person without parameters
+     * Used for avoiding nullPointerExeption
+     */
     public InsuredPerson() {
+        this.setId(0);
+        this.setFlname("Noname Noname Noname");
+        this.setPersonalCost(0.0);
+        this.setBtdate(LocalDate.of(0, 1, 1));
 
     }
 
@@ -45,6 +54,7 @@ public class InsuredPerson implements Comparable {
         DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return "id: " + this.getId() + "\tFIO:" + outFIO(this.getFlname()) + "\tDate:" + this.getBtdate().format(form) + "\tCost:" + this.getPersonalCost() + ")";
     }
+
 
     /**
      * Method for returning Insured person`s FIO in type "Ivanov O.O."

@@ -1,19 +1,22 @@
 package ua.profitsoft.entity;
 
+import java.io.*;
+
 /**
  * This class is used to contain the main info about Client that initiate the contract: type of person, FIO(first,
  * middle, last name), address
  *
  * @author Daryna
  */
-public class Client {
+public class Client implements Serializable{
 
     private Type person;
     private String name;
     private String adress;
 
+
     /**
-     * Constructs a new Contract with the specified parameters about Client
+     * Constructs a new Client with the specified parameters about Client
      *
      * @param pers  enum that specify one of types of person ENTITY or NATURAL
      * @param names FIO(first, middle, last name)(for NATURAL person)/name of the organization(for ENTITY person)
@@ -23,6 +26,15 @@ public class Client {
         this.setPerson(pers);
         this.setName(names);
         this.setAdress(adr);
+    }
+
+    /**Constructs a new Client with the default parameters
+     * Used for avoiding NullPointerExeption
+     */
+    public Client(){
+        this.setPerson(Type.NATURAL);
+        this.setName("Noname Nonamov Nonam");
+        this.setAdress("noHome");
     }
 
     /**
@@ -35,7 +47,7 @@ public class Client {
         return "Person:" + this.getPerson() + "\tName:" + this.getName() + "\tAdress:" + this.getAdress();
     }
 
-    private Type getPerson() {
+    public Type getPerson() {
         return person;
     }
 

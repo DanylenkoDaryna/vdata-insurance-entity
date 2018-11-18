@@ -2,14 +2,18 @@ package ua.profitsoft.entity;
 
 import org.junit.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ContractTest {
 
     private Client first;
+    private Client seckond;
     private ArrayList<InsuredPerson> actual;
+    private ArrayList<InsuredPerson> expects;
     private Contract c;
+    private Contract b;
     private StringBuilder border;
 
     @BeforeClass
@@ -25,11 +29,18 @@ public class ContractTest {
     @Before
     public void initTest() {
         border = new StringBuilder("---------------------------------------------------------------------------------");
-        first = new Client(Type.NATURAL, "Vasilyev Vasilyi Vasilyevich", "sq. Poetry, 35");
+        first = new Client(Type.NATURAL, "Vasilyev Vasilyi Vasilyevich", "sq. Poetry 35");
         actual = new ArrayList<>();
         c = new Contract(86, LocalDate.of(2018, 11, 11),
                 LocalDate.of(2018, 12, 11), LocalDate.of(2020, 12, 11),
                 first, actual);
+
+
+        seckond=new Client(Type.NATURAL, "Vasilyev Vasilyi Vasilyevich", "sq. Poetry 35");
+        expects=new ArrayList<>();
+        b=new Contract(86, LocalDate.of(2018, 11, 11),
+                LocalDate.of(2018, 12, 11), LocalDate.of(2020, 12, 11),
+                seckond, expects);
 
     }
 
@@ -37,8 +48,11 @@ public class ContractTest {
     public void afterTest() {
         border = null;
         first = null;
+        seckond=null;
         actual = null;
+        expects = null;
         c = null;
+        b=null;
 
     }
 
@@ -65,7 +79,7 @@ public class ContractTest {
     @Test
     public void personsByDate() {
 
-        ArrayList<InsuredPerson> expected = new ArrayList(4);
+        ArrayList<InsuredPerson> expected = new ArrayList<>(4);
 
         expected.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
         expected.add(new InsuredPerson(3, "Petrov Ivan Ivanovich", LocalDate.of(2000, 1, 2), 150.50));
@@ -84,7 +98,7 @@ public class ContractTest {
     @Test
     public void personsByName() {
 
-        ArrayList<InsuredPerson> expected = new ArrayList(4);
+        ArrayList<InsuredPerson> expected = new ArrayList<>(4);
 
         expected.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
         expected.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
@@ -115,8 +129,22 @@ public class ContractTest {
         System.out.println(border);
 
         InsuredPerson actual1 = c.getPersonById(1446);
-        Assert.assertEquals(null, actual1.getFlname());
+        Assert.assertEquals("Noname Noname Noname", actual1.getFlname());
         System.out.println(border);
     }
 
+    @Test
+    public void uploadCSV() throws IOException {
+
+
+        actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+
+
+       expects.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+       expects.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+
+        c.saveCSV();
+       Assert.assertEquals(b.toString(), c.uploadCSV().toString());
+    }
 }
