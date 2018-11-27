@@ -1,8 +1,8 @@
 package ua.profitsoft.entity;
 
 import org.junit.*;
-
 import java.io.IOException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,21 +14,11 @@ public class ContractTest {
     private ArrayList<InsuredPerson> expects;
     private Contract c;
     private Contract b;
-    private StringBuilder border;
 
-    @BeforeClass
-    public static void beforeClass() {
-        System.out.println("Before ContractTest.class");
-    }
-
-    @AfterClass
-    public static void afterClass() {
-        System.out.println("After ContractTest.class");
-    }
 
     @Before
     public void initTest() {
-        border = new StringBuilder("---------------------------------------------------------------------------------");
+
         first = new Client(Type.NATURAL, "Vasilyev Vasilyi Vasilyevich", "sq. Poetry 35");
         actual = new ArrayList<>();
         c = new Contract(86, LocalDate.of(2018, 11, 11),
@@ -46,7 +36,7 @@ public class ContractTest {
 
     @After
     public void afterTest() {
-        border = null;
+
         first = null;
         seckond=null;
         actual = null;
@@ -62,7 +52,7 @@ public class ContractTest {
         actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         Assert.assertEquals("good", "1151.0", String.valueOf(c.TotalCost()));
-        System.out.println(border);
+
     }
 
     @Test
@@ -71,7 +61,6 @@ public class ContractTest {
         actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         Assert.assertEquals("1151.0", String.valueOf(c.TotalCostI()));
-        System.out.println(border);
 
     }
 
@@ -92,7 +81,7 @@ public class ContractTest {
         actual.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(2000, 7, 26), 1000.50));
 
         Assert.assertEquals(expected.toString(), (c.personsByDate(c.getPersonList())).toString());
-        System.out.println(border);
+
     }
 
     @Test
@@ -111,7 +100,7 @@ public class ContractTest {
         actual.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         Assert.assertEquals(expected.toString(), (c.personsByName(c.getPersonList())).toString());
-        System.out.println(border);
+
 
     }
 
@@ -126,15 +115,15 @@ public class ContractTest {
 
         InsuredPerson actual = c.getPersonById(1449);
         Assert.assertEquals(expected.getFlname(), actual.getFlname());
-        System.out.println(border);
+
 
         InsuredPerson actual1 = c.getPersonById(1446);
         Assert.assertEquals("Noname Noname Noname", actual1.getFlname());
-        System.out.println(border);
+
     }
 
     @Test
-    public void uploadCSV() throws IOException {
+    public void uploadCSV()throws IOException {
 
 
         actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));

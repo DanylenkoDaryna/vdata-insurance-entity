@@ -13,22 +13,30 @@ import java.time.LocalDate;
  */
 public class Demo {
 
-    public static void main(String args[]) {
-        System.out.print("Contains in storage:");
+    public static void main(String[] args){
+       System.out.print("Contains in storage:");
 
         Client first = new Client(Type.LEGAL, "\"StarLife\"", "sq. Constitutciy 17");
         ArrayList<InsuredPerson> firstList = new ArrayList<>();
 
-        firstList.add(new InsuredPerson(1, "Pavlik Viktor Nazarovich", LocalDate.of(1995, 12, 1), 123.50));
-        firstList.add(new InsuredPerson(2, "Chelentano Adriana Petrovich", LocalDate.of(1971, 7, 20), 1150));
-        firstList.add(new InsuredPerson(3, "Chaplin Adriano Petrovich", LocalDate.of(1971, 8, 20), 1150));
-        firstList.add(new InsuredPerson(4, "Gosling Rayan Reinolds", LocalDate.of(1971, 8, 20), 1150));
-        firstList.add(new InsuredPerson(5, "Sanchez Rick Richard", LocalDate.of(1974, 8, 20), 1150));
+        try {
+            InsuredPerson a=new InsuredPerson(1, "Pavlik Viktor Nazarovich",
+                    LocalDate.of(1995, 12, 1), 123.50);
+            firstList.add(a);
+            firstList.add(new InsuredPerson(2, "Chelentano Adriana Petrovich", LocalDate.of(1971, 7, 20), 1150));
+            firstList.add(new InsuredPerson(3, "Chaplin Adriano Petrovich", LocalDate.of(1971, 8, 20), 1150));
+            firstList.add(new InsuredPerson(4, "Gosling Rayan Reinolds", LocalDate.of(1971, 8, 20), 1150));
+            firstList.add(new InsuredPerson(5, "Sanchez Rick Richard", LocalDate.of(1974, 8, 20), 1150));
+        }catch(NullPointerException n){
+            n.printStackTrace();
+            System.out.println("ffff");
+        }
+
         Contract ID41 = new Contract(41, LocalDate.of(2018, 9, 1),
                 LocalDate.of(2018, 10, 1), LocalDate.of(2020, 10, 1),
                 first, firstList);
         System.out.print(ID41.toString());
-        ID41.TotalCost();
+        System.out.println(ID41.TotalCost());
 
         Client seckond = new Client(Type.NATURAL, "Petrichenko Anthon Victorovich", "st. Klochkovskaya 111-A");
         ArrayList<InsuredPerson> secList = new ArrayList<>();
@@ -40,7 +48,7 @@ public class Demo {
                 LocalDate.of(2002, 9, 17), LocalDate.of(2019, 9, 17),
                 seckond, secList);
         System.out.print(ID42.toString());
-        ID42.TotalCost();
+        System.out.println(ID42.TotalCost());
 
         try {
             ID42.saveCSV();
@@ -49,8 +57,8 @@ public class Demo {
         }
         try {
             System.out.println(ID42.uploadCSV().toString());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException r) {
+            r.printStackTrace();
         }
     }
 

@@ -21,7 +21,7 @@ public class InsuredPerson implements Comparable, Serializable {
      * Constructs a new Insured Person without parameters
      * Used for avoiding nullPointerExeption
      */
-    public InsuredPerson() {
+    InsuredPerson() {
         this.setId(0);
         this.setFlname("Noname Noname Noname");
         this.setPersonalCost(0.0);
@@ -37,7 +37,8 @@ public class InsuredPerson implements Comparable, Serializable {
      * @param btdate LocalDate of birth
      * @param cost   double personal cost of Insurance
      */
-    public InsuredPerson(int id, String name, LocalDate btdate, double cost) {
+    InsuredPerson(int id, String name, LocalDate btdate, double cost) {
+
         this.setId(id);
         this.setFlname(name);
         this.setPersonalCost(cost);
@@ -52,7 +53,8 @@ public class InsuredPerson implements Comparable, Serializable {
     @Override
     public String toString() {
         DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return "id: " + this.getId() + "\tFIO:" + outFIO(this.getFlname()) + "\tDate:" + this.getBtdate().format(form) + "\tCost:" + this.getPersonalCost() + ")";
+        return "id: " + this.getId() + "\tFIO:" + outFIO(this.getFlname()) + "\tDate:" +
+                this.getBtdate().format(form) + "\tCost:" + this.getPersonalCost();
     }
 
 

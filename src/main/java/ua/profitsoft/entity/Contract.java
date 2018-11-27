@@ -9,7 +9,8 @@ import java.util.Comparator;
 
 
 /**
- * This class is used to contain the main info about client`s Contract: identifier, Client, Insured Persons, dates
+ * This class is used to contain the main info about client`s Contract: identifier, Client,
+ * Insured Persons, dates
  *
  * @author Daryna
  */
@@ -17,7 +18,8 @@ public class Contract implements Serializable {
 
     private int id;
     private LocalDate acceptDate;
-    private LocalDate startDate, endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Client man;
     private ArrayList<InsuredPerson> personList;
 
@@ -26,7 +28,7 @@ public class Contract implements Serializable {
      * internal object Comparator, used for correct work of method "personsByName" that sort list of Insured Persons
      * by alphabet
      */
-    public static final Comparator FIO_COMPARATOR = new Comparator() {
+    private static final Comparator FIO_COMPARATOR = new Comparator() {
         /** Override method for sorting that compare FIO Strings
          * @param o1 InsuredPerson one
          * @param o2 InsuredPerson two
@@ -42,8 +44,6 @@ public class Contract implements Serializable {
 
 
     /**
-     * Constructs a new Contract with the specified info about Client, dates, list of insured persons
-     *
      * @param number  identifies the Contract
      * @param accDate date of conclusion of our Contract
      * @param start   date when Contract starts to act
@@ -51,7 +51,7 @@ public class Contract implements Serializable {
      * @param human   Client(type) that initiate this Contract
      * @param myList  List of insured persons(generic type InsuredPerson)
      */
-    public Contract(int number, LocalDate accDate, LocalDate start, LocalDate end, Client human, ArrayList<InsuredPerson> myList) {
+    Contract(int number, LocalDate accDate, LocalDate start, LocalDate end, Client human, ArrayList<InsuredPerson> myList) {
         this.setId(number);
         this.setAcceptDate(accDate);
         this.setStartDate(start);
@@ -76,16 +76,11 @@ public class Contract implements Serializable {
         this.setPersonList(myList);
     }
 
-    /**
-     * Overrided method that prints the main info about object Contract
-     * Return String with all the attributes of class in readable state
-     *
-     * @return StringBuilder
-     */
+
     @Override
     public String toString() {
 
-        if (this.equals(null))
+        if (this == null)
             return "null Contract";
         else {
             DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -107,7 +102,7 @@ public class Contract implements Serializable {
         for (InsuredPerson p : this.getPersonList()) {
             result += p.getPersonalCost();
         }
-        System.out.println("\nTotal insurance cost:\t" + result);
+
         return result;
     }
 
@@ -122,17 +117,9 @@ public class Contract implements Serializable {
             result += element.getPersonalCost();
         }
 
-        System.out.println("\nTotal insurance cost:\t" + result);
         return result;
     }
 
-/*    public double TotalCostLam() {
-        double result = 0;
-        getPersonList().stream().forEach((InsuredPerson n) ->n.getPersonalCost());
-
-        System.out.println("\nTotal insurance cost:\t" + result);
-        return result;
-    }*/
 
     /**
      * Method for sorting Insured Persons by dates of their birthday and watching in console
@@ -141,10 +128,9 @@ public class Contract implements Serializable {
      * @param persons ArrayList with type of objects - InsuredPerson
      * @return sorted ArrayList with type - InsuredPerson
      */
-    public ArrayList<InsuredPerson> personsByDate(ArrayList<InsuredPerson> persons) {
+    public List<InsuredPerson> personsByDate(List<InsuredPerson> persons) {
 
         Collections.sort(persons);
-        System.out.println(persons);
         return persons;
     }
 
@@ -155,10 +141,9 @@ public class Contract implements Serializable {
      * @param persons ArrayList with type of objects - InsuredPerson
      * @return sorted ArrayList with type - InsuredPerson
      */
-    public ArrayList<InsuredPerson> personsByName(ArrayList<InsuredPerson> persons) {
+    public List<InsuredPerson> personsByName(List<InsuredPerson> persons) {
 
         Collections.sort(persons, FIO_COMPARATOR);
-        System.out.println(persons);
         return persons;
 
     }
@@ -176,7 +161,6 @@ public class Contract implements Serializable {
         for (InsuredPerson element : getPersonList()) {
 
             if (element.getId() == i) {
-                System.out.println(element.toString());
                 return element;
             }
 
@@ -184,66 +168,15 @@ public class Contract implements Serializable {
         return o;
     }
 
-    private int getId() {
-        return id;
-    }
-
-    private void setId(int id) {
-        this.id = id;
-    }
-
-    private Client getMan() {
-        return man;
-    }
-
-    private void setMan(Client man) {
-        this.man = man;
-    }
-
-    public ArrayList<InsuredPerson> getPersonList() {
-        return personList;
-    }
-
-    private void setPersonList(ArrayList<InsuredPerson> personList) {
-        this.personList = personList;
-    }
-
-
-    private LocalDate getAcceptDate() {
-        return acceptDate;
-    }
-
-    private void setAcceptDate(LocalDate acceptDate) {
-        this.acceptDate = acceptDate;
-    }
-
-    private LocalDate getStartDate() {
-        return startDate;
-    }
-
-    private void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    private LocalDate getEndDate() {
-        return endDate;
-    }
-
-    private void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 
     /**
      * Method save the object Contract and all it`s fields: id, dates, Client, PersonList
      * object OutputStreamWriter serialize object Contract into one string with line separators
-     *
-     * @throws IOException
      */
     public void saveCSV() throws IOException {
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(".\\src\\ContractSave.csv"), "UTF-8"));
+
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(".\\src\\ContractSave.csv"), "UTF-8"));) {
 
             bw.write("id;acceptDate;startDate;endDate;man;personList");
             bw.newLine();
@@ -275,13 +208,6 @@ public class Contract implements Serializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (bw != null) {
-                bw.flush();
-            }
-            if (bw != null) {
-                bw.close();
-            }
         }
 
     }
@@ -296,11 +222,9 @@ public class Contract implements Serializable {
      */
     public Contract uploadCSV() throws FileNotFoundException, NullPointerException {
 
-        BufferedReader br = null;
-        try {
 
-            br = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(".\\src\\ContractSave.csv")));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                new FileInputStream(".\\src\\ContractSave.csv")));) {
 
             String line = "";
             //Read to skip the header
@@ -354,31 +278,67 @@ public class Contract implements Serializable {
                     res.setMan(c);
                     res.setPersonList(resList);
 
-
                     return res;
                 }
             }
-            br.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException r) {
             r.printStackTrace();
         }
-        Contract r = new Contract();
-        return r;
+
+        return new Contract();
+    }
+
+    private int getId() {
+        return id;
+    }
+
+    private void setId(int id) {
+        this.id = id;
+    }
+
+    private Client getMan() {
+        return man;
+    }
+
+    private void setMan(Client man) {
+        this.man = man;
+    }
+
+    public List<InsuredPerson> getPersonList() {
+        return personList;
+    }
+
+    private void setPersonList(ArrayList<InsuredPerson> personList) {
+        this.personList = personList;
     }
 
 
-  /*  private void writeObject(java.io.ObjectOutputStream out)throws IOException {
-
-        out.writeInt(y);
-        out.defaultWriteObject(); // cохраняет поле z
+    private LocalDate getAcceptDate() {
+        return acceptDate;
     }
 
-    private void  readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
-        x = in.readInt();
-        y = in.readInt();
-        in.defaultReadObject();
-    }*/
+    private void setAcceptDate(LocalDate acceptDate) {
+        this.acceptDate = acceptDate;
+    }
+
+    private LocalDate getStartDate() {
+        return startDate;
+    }
+
+    private void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    private LocalDate getEndDate() {
+        return endDate;
+    }
+
+    private void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
 
 }
