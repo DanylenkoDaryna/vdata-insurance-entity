@@ -1,10 +1,13 @@
-package ua.profitsoft.entity;
+package service;
+
+import dict.Type;
+import data.Client;
+import data.InsuredPerson;
 
 import java.io.*;
 import java.util.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -14,18 +17,18 @@ import java.util.Comparator;
  *
  * @author Daryna
  */
-public class Contract implements Serializable {
+public class Contract implements IContract, Serializable {
 
     private int id;
     private LocalDate acceptDate;
     private LocalDate startDate;
     private LocalDate endDate;
     private Client man;
-    private ArrayList<InsuredPerson> personList;
+    private List<InsuredPerson> personList=new ArrayList<>();
 
     private static final String CSV_SEPARATOR = ";";
     /**
-     * internal object Comparator, used for correct work of method "personsByName" that sort list of Insured Persons
+     * internal object Comparator, used for correct work of method "sortPersonsByName" that sort list of Insured Persons
      * by alphabet
      */
     private static final Comparator FIO_COMPARATOR = new Comparator() {
@@ -51,45 +54,41 @@ public class Contract implements Serializable {
      * @param human   Client(type) that initiate this Contract
      * @param myList  List of insured persons(generic type InsuredPerson)
      */
-    Contract(int number, LocalDate accDate, LocalDate start, LocalDate end, Client human, ArrayList<InsuredPerson> myList) {
+    public Contract(int number, LocalDate accDate, LocalDate start, LocalDate end, Client human,List<InsuredPerson> myList) {
         this.setId(number);
         this.setAcceptDate(accDate);
         this.setStartDate(start);
         this.setEndDate(end);
         this.setMan(human);
-        this.setPersonList(myList);
+        this.setPersonList((ArrayList<InsuredPerson>) myList);
     }
 
     /**
      * Constructs a new Contract with default parameters
      * Used for avoiding nullPointerExeption
      */
-    private Contract() {
+    public Contract() {
         this.setId(0);
         this.setAcceptDate(LocalDate.of(0, 1, 1));
         this.setStartDate(LocalDate.of(0, 1, 1));
         this.setEndDate(LocalDate.of(0, 1, 1));
         this.setMan(new Client());
-        ArrayList<InsuredPerson> myList = new ArrayList<>();
+        List<InsuredPerson> myList = new ArrayList<>();
         InsuredPerson ip = new InsuredPerson();
         myList.add(ip);
-        this.setPersonList(myList);
+        this.setPersonList((ArrayList<InsuredPerson>) myList);
     }
 
 
     @Override
     public String toString() {
 
-        if (this == null)
-            return "null Contract";
-        else {
             DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String border = "\n----------------------------------------------------\n";
             return border + "ContractID:\t" + this.getId() + "\nAcceptDate:\t" + this.getAcceptDate().format(form) +
                     "\nStartDate:\t" + this.getStartDate().format(form) + "\nEndDate:\t" + this.getEndDate().format(form)
                     + "\nClient:\t" + this.getMan().toString() + "\nPersonList:" + this.getPersonList();
 
-        }
     }
 
     /**
@@ -97,24 +96,10 @@ public class Contract implements Serializable {
      * enumerates the collection and summarizes all the individual values of the insured persons
      * Implements foreach cycle
      */
-    public double TotalCost() {
+    public double getTotalCost() {
         double result = 0;
         for (InsuredPerson p : this.getPersonList()) {
             result += p.getPersonalCost();
-        }
-
-        return result;
-    }
-
-    /**
-     * Method that counts and prints the total cost of insurance by the Contract (as the sum of all insured persons)
-     * enumerates the collection and summarizes all the individual values of the insured persons
-     * Implements Iterator
-     */
-    public double TotalCostI() {
-        double result = 0;
-        for (InsuredPerson element : getPersonList()) {
-            result += element.getPersonalCost();
         }
 
         return result;
@@ -128,10 +113,12 @@ public class Contract implements Serializable {
      * @param persons ArrayList with type of objects - InsuredPerson
      * @return sorted ArrayList with type - InsuredPerson
      */
-    public List<InsuredPerson> personsByDate(List<InsuredPerson> persons) {
+    public List<InsuredPerson> sortPersonsByDate(List<InsuredPerson> persons) {
 
-        Collections.sort(persons);
+        persons.sort((s1,s2)-> (s1.getBtdate().compareTo(s2.getBtdate())));
+
         return persons;
+
     }
 
     /**
@@ -141,9 +128,9 @@ public class Contract implements Serializable {
      * @param persons ArrayList with type of objects - InsuredPerson
      * @return sorted ArrayList with type - InsuredPerson
      */
-    public List<InsuredPerson> personsByName(List<InsuredPerson> persons) {
+    public List<InsuredPerson> sortPersonsByName(List<InsuredPerson> persons) {
 
-        Collections.sort(persons, FIO_COMPARATOR);
+        persons.sort(FIO_COMPARATOR);
         return persons;
 
     }
@@ -159,11 +146,9 @@ public class Contract implements Serializable {
         InsuredPerson o = new InsuredPerson();
 
         for (InsuredPerson element : getPersonList()) {
-
             if (element.getId() == i) {
                 return element;
             }
-
         }
         return o;
     }
@@ -173,10 +158,10 @@ public class Contract implements Serializable {
      * Method save the object Contract and all it`s fields: id, dates, Client, PersonList
      * object OutputStreamWriter serialize object Contract into one string with line separators
      */
-    public void saveCSV() throws IOException {
+    public void saveCSV() {
 
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(".\\src\\ContractSave.csv"), "UTF-8"));) {
+                new FileOutputStream(".\\src\\Contract"+this.getId()+".csv"), "UTF-8"));) {
 
             bw.write("id;acceptDate;startDate;endDate;man;personList");
             bw.newLine();
@@ -187,7 +172,9 @@ public class Contract implements Serializable {
                     this.getEndDate()).append(CSV_SEPARATOR);
             one.append(this.getMan().getPerson()).append(",");
             one.append(this.getMan().getName()).append(",");
-            one.append(this.getMan().getAdress()).append(",");
+            one.append(this.getMan().getCity()).append(",");
+            one.append(this.getMan().getStreet()).append(",");
+            one.append(this.getMan().getBuilding()).append(",");
             one.append(CSV_SEPARATOR);
             bw.write(one.toString());
 
@@ -217,42 +204,40 @@ public class Contract implements Serializable {
      * Method reads our file and split the string like the object with type Contract
      *
      * @return deserialized object with type Contract
-     * @throws FileNotFoundException if file with name ContractSave.csv not found
-     * @throws NullPointerException  if object could be null
      */
-    public Contract uploadCSV() throws FileNotFoundException, NullPointerException {
+    public Contract uploadCSV() {
 
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                new FileInputStream(".\\src\\ContractSave.csv")));) {
+                new FileInputStream(".\\src\\Contract"+this.getId()+".csv")));) {
 
             String line = "";
-            //Read to skip the header
+
             br.readLine();
-            //Reading from the second line
-            while ((line = br.readLine()) != null) {
-                String[] Details = line.split(CSV_SEPARATOR);
 
-                if (Details.length > 0) {
+            while ((line = (String) br.readLine()) != null) {
+                String[] details = line.split(CSV_SEPARATOR);
 
-                    String[] foracc = Details[1].split("-");
+                if (details.length > 0) {
+
+                    String[] foracc = details[1].split("-");
                     LocalDate acc = LocalDate.of(Integer.parseInt(foracc[0]), Integer.parseInt(foracc[1]), Integer.parseInt(foracc[2]));
 
-                    String[] forstart = Details[2].split("-");
+                    String[] forstart = details[2].split("-");
                     LocalDate start = LocalDate.of(Integer.parseInt(forstart[0]), Integer.parseInt(forstart[1]), Integer.parseInt(forstart[2]));
 
-                    String[] forend = Details[3].split("-");
+                    String[] forend = details[3].split("-");
                     LocalDate end = LocalDate.of(Integer.parseInt(forend[0]), Integer.parseInt(forend[1]), Integer.parseInt(forend[2]));
 
-                    String[] forClient = Details[4].split(",");
+                    String[] forClient = details[4].split(",");
 
                     Client c = null;
                     if ("NATURAL".equals(forClient[0]))
-                        c = new Client(Type.NATURAL, forClient[1], forClient[2]);
+                        c = new Client(Type.NATURAL, forClient[1], forClient[2], forClient[3],forClient[4]);
                     if (forClient[0].equals("LEGAL"))
-                        c = new Client(Type.LEGAL, forClient[1], forClient[2]);
+                        c = new Client(Type.LEGAL, forClient[1], forClient[2], forClient[3],forClient[4]);
 
-                    String[] listP = Details[5].split("/");
+                    String[] listP = details[5].split("/");
                     ArrayList<InsuredPerson> resList = new ArrayList<>();
 
                     for (String s : listP) {
@@ -261,8 +246,8 @@ public class Contract implements Serializable {
                         LocalDate d = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
                         double cost = Double.parseDouble(concr[3]);
                         InsuredPerson i = new InsuredPerson();
-                        int id = Integer.parseInt(concr[0]);
-                        i.setId(id);
+                        int idPerson = Integer.parseInt(concr[0]);
+                        i.setId(idPerson);
                         i.setFlname(concr[1]);
                         i.setBtdate(d);
                         i.setPersonalCost(cost);
@@ -270,8 +255,9 @@ public class Contract implements Serializable {
                     }
 
                     Contract res = new Contract();
-                    int ident = Integer.parseInt(Details[0]);
-                    res.setId(ident);
+
+                    int identifier= Integer.parseInt(details[0]);
+                    res.setId(identifier);
                     res.setAcceptDate(acc);
                     res.setStartDate(start);
                     res.setEndDate(end);
@@ -284,8 +270,6 @@ public class Contract implements Serializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NullPointerException r) {
-            r.printStackTrace();
         }
 
         return new Contract();

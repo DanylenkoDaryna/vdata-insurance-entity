@@ -1,5 +1,6 @@
 package ua.profitsoft.entity;
 
+import data.InsuredPerson;
 import org.junit.Assert;
 import org.junit.Test;
 

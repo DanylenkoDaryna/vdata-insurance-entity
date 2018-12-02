@@ -1,4 +1,6 @@
-package ua.profitsoft.entity;
+package data;
+
+import dict.Type;
 
 import java.io.*;
 
@@ -12,33 +14,41 @@ public class Client implements Serializable {
 
     private Type person;
     private String name;
-    private String adress;
+    private String city;
+    private String street;
+    private String building;
 
 
     /**
      * @param pers  enum that specify one of types of person ENTITY or NATURAL
      * @param names FIO(first, middle, last name)(for NATURAL person)/name of the organization(for ENTITY person)
-     * @param adr   residential address
+     *   residential address
      */
-    Client(Type pers, String names, String adr) {
+    public Client(Type pers, String names, String city, String street, String building) {
         this.setPerson(pers);
         this.setName(names);
-        this.setAdress(adr);
+        this.setCity(city);
+        this.setStreet(street);
+        this.setBuilding(building);
+
     }
 
     /**
      * Constructs a new Client with the default parameters
      * Used for avoiding NullPointerExeption
      */
-    Client() {
+    public Client() {
         this.setPerson(Type.NATURAL);
         this.setName("Noname Nonamov Nonam");
-        this.setAdress("noHome");
+        city="";
+        street="";
+        building="";
     }
 
     @Override
     public String toString() {
-        return "Person:" + this.getPerson() + "\tName:" + this.getName() + "\tAdress:" + this.getAdress();
+        return "Person:" + this.getPerson() + "\tName:" + this.getName() + "\tAdress:" + this.getCity()+", st. "+
+                this.getStreet()+", "+this.getBuilding();
     }
 
     public Type getPerson() {
@@ -57,12 +67,30 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+
+
+    public String getCity() {
+        return city;
     }
 
-    private void setAdress(String adress) {
-        this.adress = adress;
+    private void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    private void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    private void setBuilding(String building) {
+        this.building = building;
     }
 }
 
