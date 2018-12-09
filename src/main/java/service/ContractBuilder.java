@@ -10,17 +10,21 @@ import java.util.ArrayList;
 
 public class ContractBuilder implements IBuilder {
 
-    private int id;
+    private int id=0;
     private LocalDate acceptDate;
     private LocalDate startDate;
     private LocalDate endDate;
     private Client man;
     private ArrayList<InsuredPerson> personList=new ArrayList<>();
-
+    Contract c;
 
     @Override
     public void setId(int id) {
-        this.id = id;
+        this.id=id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -50,6 +54,7 @@ public class ContractBuilder implements IBuilder {
 
     public Contract getResult() {
 
-        return new Contract(id,acceptDate,startDate,endDate,man,personList);
+        c= new Contract(id,acceptDate,startDate,endDate,man,personList);
+        return c;
     }
 }

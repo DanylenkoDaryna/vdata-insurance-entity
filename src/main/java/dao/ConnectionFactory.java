@@ -14,7 +14,7 @@ public class ConnectionFactory {
 
     private static BasicDataSource dataSource=null;
 
-    public void init() {
+    public ConnectionFactory() {//public void init() {
         if (dataSource != null) {
             try {
                 dataSource.close();
@@ -37,6 +37,7 @@ public class ConnectionFactory {
     }
 
     public static Connection getMySQLConnection() throws SQLException {
+
         return dataSource.getConnection();
     }
 

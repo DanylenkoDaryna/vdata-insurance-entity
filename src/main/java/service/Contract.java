@@ -41,7 +41,8 @@ public class Contract implements IContract, Serializable {
         public int compare(Object o1, Object o2) {
             InsuredPerson ip1 = (InsuredPerson) o1;
             InsuredPerson ip2 = (InsuredPerson) o2;
-            return ip1.getFlname().compareTo(ip2.getFlname());
+
+            return ip1.getSurname().compareTo(ip2.getSurname());
         }
     };
 
@@ -171,10 +172,18 @@ public class Contract implements IContract, Serializable {
                     this.getStartDate()).append(CSV_SEPARATOR).append(
                     this.getEndDate()).append(CSV_SEPARATOR);
             one.append(this.getMan().getPerson()).append(",");
-            one.append(this.getMan().getName()).append(",");
+
+            if("NATURAL".equals(this.getMan().getPerson().toString())){
+                one.append(this.getMan().getName()).append(",");
+                one.append(this.getMan().getMiddleName()).append(",");
+                one.append(this.getMan().getSurname()).append(",");
+            }else if("LEGAL".equals(this.getMan().getPerson())) {
+                one.append(this.getMan().getName()).append(",");
+            }
             one.append(this.getMan().getCity()).append(",");
             one.append(this.getMan().getStreet()).append(",");
             one.append(this.getMan().getBuilding()).append(",");
+            one.append(this.getMan().getId()).append(",");
             one.append(CSV_SEPARATOR);
             bw.write(one.toString());
 
@@ -182,7 +191,11 @@ public class Contract implements IContract, Serializable {
                 StringBuilder oneLine = new StringBuilder();
                 oneLine.append(p.getId());
                 oneLine.append(",");
-                oneLine.append(p.getFlname());
+                oneLine.append(p.getName());
+                oneLine.append(",");
+                oneLine.append(p.getMiddleName());
+                oneLine.append(",");
+                oneLine.append(p.getSurname());
                 oneLine.append(",");
                 oneLine.append(p.getBtdate());
                 oneLine.append(",");
@@ -233,22 +246,25 @@ public class Contract implements IContract, Serializable {
 
                     Client c = null;
                     if ("NATURAL".equals(forClient[0]))
-                        c = new Client(Type.NATURAL, forClient[1], forClient[2], forClient[3],forClient[4]);
+
+                        c = new Client(Type.NATURAL, forClient[1], forClient[2], forClient[3],forClient[4],forClient[5],forClient[6], Integer.parseInt(forClient[7]));
                     if (forClient[0].equals("LEGAL"))
-                        c = new Client(Type.LEGAL, forClient[1], forClient[2], forClient[3],forClient[4]);
+                        c = new Client(Type.LEGAL, forClient[1], forClient[2], forClient[3],forClient[4], Integer.parseInt(forClient[7]));
 
                     String[] listP = details[5].split("/");
                     ArrayList<InsuredPerson> resList = new ArrayList<>();
 
                     for (String s : listP) {
                         String[] concr = s.split(",");
-                        String[] date = concr[2].split("-");
+                        String[] date = concr[4].split("-");
                         LocalDate d = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
-                        double cost = Double.parseDouble(concr[3]);
+                        double cost = Double.parseDouble(concr[5]);
                         InsuredPerson i = new InsuredPerson();
                         int idPerson = Integer.parseInt(concr[0]);
                         i.setId(idPerson);
-                        i.setFlname(concr[1]);
+                        i.setSurname(concr[1]);
+                        i.setName(concr[2]);
+                        i.setMiddleName(concr[3]);
                         i.setBtdate(d);
                         i.setPersonalCost(cost);
                         resList.add(i);
@@ -275,19 +291,19 @@ public class Contract implements IContract, Serializable {
         return new Contract();
     }
 
-    private int getId() {
+    public int getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    private Client getMan() {
+    public Client getMan() {
         return man;
     }
 
-    private void setMan(Client man) {
+    public void setMan(Client man) {
         this.man = man;
     }
 
@@ -295,32 +311,32 @@ public class Contract implements IContract, Serializable {
         return personList;
     }
 
-    private void setPersonList(ArrayList<InsuredPerson> personList) {
+    public void setPersonList(ArrayList<InsuredPerson> personList) {
         this.personList = personList;
     }
 
 
-    private LocalDate getAcceptDate() {
+    public LocalDate getAcceptDate() {
         return acceptDate;
     }
 
-    private void setAcceptDate(LocalDate acceptDate) {
+    public void setAcceptDate(LocalDate acceptDate) {
         this.acceptDate = acceptDate;
     }
 
-    private LocalDate getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    private void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    private LocalDate getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    private void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

@@ -21,20 +21,24 @@ public class Demo {
     public static void main(String[] args){
        System.out.print("Contains in storage:");
 
-        Client first = new Client(Type.LEGAL, "CyberLife", "Detroit", "Sumska","14-F" );
+        Client first = new Client(Type.LEGAL, "CyberLife", "Detroit", "Sumska","14-F", 1);
         ArrayList<InsuredPerson> firstList = new ArrayList<>();
 
         try {
-            InsuredPerson a=new InsuredPerson(1, "Pavlik Viktor Nazarovich",
+            InsuredPerson a=new InsuredPerson(1, "Pavlik", "Viktor", "Nazarovich",
                     LocalDate.of(1995, 12, 1), 123.50);
             firstList.add(a);
-            firstList.add(new InsuredPerson(2, "Chelentttano Adriana Petrovich", LocalDate.of(1971, 7, 20), 1150));
-            firstList.add(new InsuredPerson(3, "Chaplin Adriano Petrovich", LocalDate.of(1971, 8, 20), 1150));
-            firstList.add(new InsuredPerson(4, "Gosling Rayan Reinolds", LocalDate.of(1971, 8, 20), 1150));
-            firstList.add(new InsuredPerson(5, "Sanchez Rick Richard", LocalDate.of(1974, 8, 20), 1150));
+            firstList.add(new InsuredPerson(2, "Chelentttano", "Adriana", "Petrovich",
+                    LocalDate.of(1971, 7, 20), 1150));
+            firstList.add(new InsuredPerson(3, "Chaplin", "Adriano", "Petrovich",
+                    LocalDate.of(1971, 8, 20), 1150));
+            firstList.add(new InsuredPerson(4, "Gosling", "Rayan", "Reinolds",
+                    LocalDate.of(1971, 8, 20), 1150));
+            firstList.add(new InsuredPerson(5, "Sanchez", "Rick", "Richard",
+                    LocalDate.of(1974, 8, 20), 1150));
         }catch(NullPointerException n){
             n.printStackTrace();
-            System.out.println("ffff");
+
         }
 
         Director director = new Director();
@@ -52,16 +56,19 @@ public class Demo {
         System.out.print(ID41.toString());
         System.out.println(ID41.getTotalCost());
 
-        Client seckond = new Client(Type.NATURAL, "Petrichenko Anthon Victorovich", "Kharkyv",
-                "Klochkovskaya", "111-A");
+        Client seckond = new Client(Type.NATURAL, "Petrichenko", "Anthon", "Victorovich", "Kharkyv",
+                "Klochkovskaya", "111-A", 2);
         ArrayList<InsuredPerson> secList = new ArrayList<>();
-        secList.add(new InsuredPerson(1, "Ivashenko Inokentiy Nikolovich", LocalDate.of(1982, 10, 3), 220.55));
-        secList.add(new InsuredPerson(2, "Danylchenko Dmythriy Horithonovich", LocalDate.of(1997, 12, 14), 49.99));
-        secList.add(new InsuredPerson(3, "Prof IT Soft ", LocalDate.of(2002, 8, 7), 0.0));
+        secList.add(new InsuredPerson(1, "Ivashenko", "Inokentiy", "Nikolovich",
+                LocalDate.of(1982, 10, 3), 220.55));
+        secList.add(new InsuredPerson(2, "Danylchenko", "Dmythriy", "Horithonovich",
+                LocalDate.of(1997, 12, 14), 49.99));
+        secList.add(new InsuredPerson(3, "Prof","IT", "Soft ",
+                LocalDate.of(2002, 8, 7), 0.0));
 
 
 
-        contractBuilder.setId(42);
+        contractBuilder.setId(48);
         contractBuilder.setAcceptDate(LocalDate.of(2015, 8, 17));
         contractBuilder.setStartDate(LocalDate.of(2002, 9, 17));
         contractBuilder.setEndDate(LocalDate.of(2019, 9, 17));

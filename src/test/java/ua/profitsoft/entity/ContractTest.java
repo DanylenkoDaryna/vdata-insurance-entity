@@ -27,7 +27,7 @@ public class ContractTest {
     @Before
     public void initTest() {
 
-        first = new Client(Type.NATURAL, "Vasilyev Vasilyi Vasilyevich", "Kyiv","Poetry", "35");
+        first = new Client(Type.NATURAL, "Vasilyev", "Vasilyi", "Vasilyevich", "Kyiv","Poetry", "35", 1);
         actual = new ArrayList<>();
 
         Director director = new Director();
@@ -49,7 +49,7 @@ public class ContractTest {
 
 
 
-        seckond = new Client(Type.NATURAL, "Vasilyev Vasilyi Vasilyevich", "Kyiv","Poetry", "35");
+        seckond = new Client(Type.NATURAL, "Vasilyev","Vasilyi", "Vasilyevich", "Kyiv","Poetry", "35", 2);
         expects = new ArrayList<>();
 
         contractBuilder.setId(93);
@@ -80,8 +80,8 @@ public class ContractTest {
 
     @Test
     public void getTotalCost() {
-        actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         Assert.assertEquals("good", "1151.0", String.valueOf(c.getTotalCost()));
 
@@ -95,15 +95,15 @@ public class ContractTest {
 
         ArrayList<InsuredPerson> expected = new ArrayList<>(4);
 
-        expected.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
-        expected.add(new InsuredPerson(3, "Petrov Ivan Ivanovich", LocalDate.of(2000, 1, 2), 150.50));
-        expected.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(2000, 1, 6), 150.50));
-        expected.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(2000, 7, 26), 1000.50));
+        expected.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        expected.add(new InsuredPerson(3, "Petrov", "Ivan", "Ivanovich", LocalDate.of(2000, 1, 2), 150.50));
+        expected.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(2000, 1, 6), 150.50));
+        expected.add(new InsuredPerson(4, "Ankirov", "Peter", "Petrovich", LocalDate.of(2000, 7, 26), 1000.50));
 
-        actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(2000, 1, 6), 150.50));
-        actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
-        actual.add(new InsuredPerson(3, "Petrov Ivan Ivanovich", LocalDate.of(2000, 1, 2), 150.50));
-        actual.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(2000, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(2000, 1, 6), 150.50));
+        actual.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(3, "Petrov", "Ivan", "Ivanovich", LocalDate.of(2000, 1, 2), 150.50));
+        actual.add(new InsuredPerson(4, "Ankirov", "Peter", "Petrovich", LocalDate.of(2000, 7, 26), 1000.50));
 
         Assert.assertEquals(expected.toString(), (c.sortPersonsByDate(c.getPersonList())).toString());
 
@@ -114,15 +114,15 @@ public class ContractTest {
 
         ArrayList<InsuredPerson> expected = new ArrayList<>(4);
 
-        expected.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
-        expected.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        expected.add(new InsuredPerson(3, "Petrov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        expected.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        expected.add(new InsuredPerson(4, "Ankirov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        expected.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        expected.add(new InsuredPerson(3, "Petrov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        expected.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
-        actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
-        actual.add(new InsuredPerson(3, "Petrov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        actual.add(new InsuredPerson(4, "Ankirov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(3, "Petrov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(4, "Ankirov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         Assert.assertEquals(expected.toString(), (c.sortPersonsByName(c.getPersonList())).toString());
 
@@ -132,30 +132,30 @@ public class ContractTest {
     @Test
     public void testSearchPerson() {
 
-        InsuredPerson expected = new InsuredPerson(1449, "Berezova Marya Ivanovna", LocalDate.of(1994, 1, 29), 1500);
+        InsuredPerson expected = new InsuredPerson(1449, "Berezova", "Marya", "Ivanovna", LocalDate.of(1994, 1, 29), 1500);
 
-        actual.add(new InsuredPerson(133, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        actual.add(new InsuredPerson(1449, "Berezova Marya Ivanovna", LocalDate.of(1994, 1, 29), 1500));
-        actual.add(new InsuredPerson(1448, "Ivanov Helmut Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(133, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(1449, "Berezova", "Marya", "Ivanovna", LocalDate.of(1994, 1, 29), 1500));
+        actual.add(new InsuredPerson(1448, "Ivanov", "Helmut", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
 
         InsuredPerson actual = c.getPersonById(1449);
-        Assert.assertEquals(expected.getFlname(), actual.getFlname());
+        Assert.assertEquals(expected.getSurname(), actual.getSurname());
 
 
         InsuredPerson actual1 = c.getPersonById(1446);
-        Assert.assertEquals("Noname Noname Noname", actual1.getFlname());
+        Assert.assertEquals("", actual1.getSurname());
 
     }
 
     @Test
     public void uploadCSV() {
 
-        actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
 
-        expects.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        expects.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        expects.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        expects.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         b.sortPersonsByName(expects);
         c.sortPersonsByName(actual);
@@ -167,8 +167,8 @@ public class ContractTest {
     @Test
     public void testJDBC()  {
 
-        actual.add(new InsuredPerson(1, "Ivanov Ivan Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
-        actual.add(new InsuredPerson(2, "Petrov Peter Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
+        actual.add(new InsuredPerson(1, "Ivanov", "Ivan", "Ivanovich", LocalDate.of(1991, 1, 6), 150.50));
+        actual.add(new InsuredPerson(2, "Petrov", "Peter", "Petrovich", LocalDate.of(1980, 7, 26), 1000.50));
 
         /*dao.createTable(c);
         dao.getDB().getId();

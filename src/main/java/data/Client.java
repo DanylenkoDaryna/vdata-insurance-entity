@@ -12,19 +12,37 @@ import java.io.*;
  */
 public class Client implements Serializable {
 
+    private int id;
     private Type person;
     private String name;
+    private String middleName;
+    private String surname;
     private String city;
     private String street;
     private String building;
 
 
+
+    public Client(Type pers, String name, String middleName, String surname, String city, String street, String building, int id) {
+        this.setId(id);
+        this.setPerson(pers);
+        this.setName(name);
+        this.setMiddleName(middleName);
+        this.setSurname(surname);
+        this.setCity(city);
+        this.setStreet(street);
+        this.setBuilding(building);
+
+    }
+
+
     /**
      * @param pers  enum that specify one of types of person ENTITY or NATURAL
      * @param names FIO(first, middle, last name)(for NATURAL person)/name of the organization(for ENTITY person)
-     *   residential address
+     * @param id
      */
-    public Client(Type pers, String names, String city, String street, String building) {
+    public Client(Type pers, String names, String city, String street, String building, int id) {
+        this.setId(id);
         this.setPerson(pers);
         this.setName(names);
         this.setCity(city);
@@ -38,6 +56,7 @@ public class Client implements Serializable {
      * Used for avoiding NullPointerExeption
      */
     public Client() {
+        this.id = 0;
         this.setPerson(Type.NATURAL);
         this.setName("Noname Nonamov Nonam");
         city="";
@@ -47,7 +66,8 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Person:" + this.getPerson() + "\tName:" + this.getName() + "\tAdress:" + this.getCity()+", st. "+
+        return "Person:" + this.getPerson() + "\tName:" + this.getName() + " " + this.getMiddleName()
+                + " " + this.getSurname() +"\tAdress:" + this.getCity()+", st. "+
                 this.getStreet()+", "+this.getBuilding();
     }
 
@@ -91,6 +111,30 @@ public class Client implements Serializable {
 
     private void setBuilding(String building) {
         this.building = building;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 

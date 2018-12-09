@@ -12,7 +12,10 @@ import java.time.LocalDate;
  */
 public class InsuredPerson implements  Serializable {
     private int id;
-    private String flname;
+    private int number=0;
+    private String name="no";
+    private String middleName="no";
+    private String surname="no";
     private LocalDate btdate;
     private double personalCost;
 
@@ -23,26 +26,30 @@ public class InsuredPerson implements  Serializable {
      */
     public InsuredPerson() {
         this.setId(0);
-        this.setFlname("Noname Noname Noname");
-        this.setPersonalCost(0.0);
+        this.setName("Noname");
+        this.setMiddleName("Anonim");
+        this.setSurname("Fox");
         this.setBtdate(LocalDate.of(0, 1, 1));
-
+        this.setPersonalCost(0.0);
     }
 
     /**
      * Constructs a new Insured Person with the specified parameters of this person
-     *
-     * @param id     int unique identifier for the person
+     *  @param id     int unique identifier for the person
      * @param name   String FIO(first, middle, last name)
      * @param btdate LocalDate of birth
      * @param cost   double personal cost of Insurance
+     * @param surname
      */
-    public InsuredPerson(int id, String name, LocalDate btdate, double cost) {
-
+    public InsuredPerson(int id, String name,String middleName, String surname, LocalDate btdate, double cost) {
         this.setId(id);
-        this.setFlname(name);
-        this.setPersonalCost(cost);
+        this.setName(name);
+        this.setMiddleName(middleName);
+        this.setSurname(surname);
+
         this.setBtdate(btdate);
+        this.setPersonalCost(cost);
+
     }
 
     /**
@@ -53,7 +60,7 @@ public class InsuredPerson implements  Serializable {
     @Override
     public String toString() {
         DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return "id: " + this.getId() + "\tFIO:" + outFIO(this.getFlname()) + "\tDate:" +
+        return "id: " + this.getId() + "\tFIO:" + outFIO(this.getSurname(),this.getName(),this.getMiddleName()) + "\tDate:" +
                 this.getBtdate().format(form) + "\tCost:" + this.getPersonalCost();
     }
 
@@ -64,9 +71,10 @@ public class InsuredPerson implements  Serializable {
      * @param name String with FIO() of Person
      * @return String in type "Ivanov O.O."
      */
-    public String outFIO(String name) {
-        String[] res = name.split(" ");
-        return res[0] + " " + res[1].charAt(0) + "." + res[2].charAt(0) + ".";
+    public String outFIO(String surname,String name,String middle) {
+
+       return surname+" "+name.charAt(0)+"."+middle.charAt(0)+".";
+
     }
 
 
@@ -76,14 +84,6 @@ public class InsuredPerson implements  Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getFlname() {
-        return flname;
-    }
-
-    public void setFlname(String flname) {
-        this.flname = flname;
     }
 
     public double getPersonalCost() {
@@ -104,4 +104,35 @@ public class InsuredPerson implements  Serializable {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 }
