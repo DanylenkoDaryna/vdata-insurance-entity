@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="client-bean" class="data.Client">
+    <property name="person" value="LEGAL"/>
+    <property name="name" value="Ignasio"/>
+    <property name="middleName" value="Ivanych"/>
+    <property name="surname" value="Linn"/>
+    <property name="city" value="Star"/>
+    <property name="street" value="Pain"/>
+    <property name="building" value="123"/>
+</bean>
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd" />
+    </bean>
+
+    <bean id="person-bean" class="data.InsuredPerson">
+    <property name="id" value="1"/>
+    <property name="name" value="Enrico"/>
+    <property name="middleName" value="Ilich"/>
+    <property name="surname" value="Puska"/>
+        <property name="btdate">
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="2010-01-31"/>
+
+            </bean>
+        </property>
+
+    <property name="personalCost" value="234,5"/>
+</bean>
+
+
+
+</beans>

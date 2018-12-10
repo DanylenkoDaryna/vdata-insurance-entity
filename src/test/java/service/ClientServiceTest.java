@@ -4,6 +4,9 @@ import data.Client;
 import dict.Type;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class ClientServiceTest {
     private Client first;
@@ -36,7 +39,18 @@ public class ClientServiceTest {
     @Test
     public void deleteClient(){
 
-        //cs.getDao().delete(first.getId());
         cs.getDao().delete(10);
+    }
+
+    @Test
+    public void springAddClient(){
+
+        ApplicationContext context =
+                new FileSystemXmlApplicationContext("./src/main/resources/spring-context.xml");
+        Client cl = (Client)context.getBean("client-bean");
+        System.out.println(cl.toString());
+
+
+
     }
 }

@@ -1,5 +1,8 @@
 package data;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
@@ -16,7 +19,11 @@ public class InsuredPerson implements  Serializable {
     private String name="no";
     private String middleName="no";
     private String surname="no";
+
+    @Autowired
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate btdate;
+
     private double personalCost;
 
 
@@ -86,23 +93,13 @@ public class InsuredPerson implements  Serializable {
         this.id = id;
     }
 
-    public double getPersonalCost() {
-        return personalCost;
+    public int getNumber() {
+        return number;
     }
 
-    public void setPersonalCost(double personalCost) {
-        this.personalCost = personalCost;
+    public void setNumber(int number) {
+        this.number = number;
     }
-
-    public LocalDate getBtdate() {
-
-        return btdate;
-    }
-
-    public void setBtdate(LocalDate btdate) {
-        this.btdate = btdate;
-    }
-
 
     public String getName() {
         return name;
@@ -128,11 +125,19 @@ public class InsuredPerson implements  Serializable {
         this.surname = surname;
     }
 
-    public int getNumber() {
-        return number;
+    public LocalDate getBtdate() {
+        return btdate;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setBtdate(LocalDate btdate) {
+        this.btdate = btdate;
+    }
+
+    public double getPersonalCost() {
+        return personalCost;
+    }
+
+    public void setPersonalCost(double personalCost) {
+        this.personalCost = personalCost;
     }
 }

@@ -3,8 +3,11 @@ package service;
 import data.InsuredPerson;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.*;
 
@@ -43,4 +46,16 @@ public class PersonServiceTest {
 
        ps.getDao().delete(person.getId());
     }
+
+    @Test
+    public void springPerson(){
+
+        LocalDate ld=LocalDate.parse("1997-01-03", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        ApplicationContext context =
+                new FileSystemXmlApplicationContext("./src/main/resources/spring-context.xml");
+        PersonService p = (PersonService)context.getBean("person-bean");
+        System.out.println(p.toString());
+    }
+
 }

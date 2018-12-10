@@ -2,6 +2,7 @@ package data;
 
 import dict.Type;
 
+
 import java.io.*;
 
 /**
@@ -71,47 +72,7 @@ public class Client implements Serializable {
                 this.getStreet()+", "+this.getBuilding();
     }
 
-    public Type getPerson() {
-        return person;
-    }
 
-    private void setPerson(Type person) {
-        this.person = person;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    private void setName(String name) {
-        this.name = name;
-    }
-
-
-
-    public String getCity() {
-        return city;
-    }
-
-    private void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    private void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getBuilding() {
-        return building;
-    }
-
-    private void setBuilding(String building) {
-        this.building = building;
-    }
 
     public String getMiddleName() {
         return middleName;
@@ -135,6 +96,46 @@ public class Client implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Type getPerson() {
+        return person;
+    }
+
+    public void setPerson(Type person) {
+        this.person = person;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 }
 
