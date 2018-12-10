@@ -48,6 +48,7 @@ public class ClientServiceTest {
         ApplicationContext context =
                 new FileSystemXmlApplicationContext("./src/main/resources/spring-context.xml");
         Client cl = (Client)context.getBean("client-bean");
+
         System.out.println(cl.toString());
 
 
