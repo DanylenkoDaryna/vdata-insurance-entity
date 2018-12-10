@@ -55,6 +55,7 @@ public class PersonServiceTest {
         ApplicationContext context =
                 new FileSystemXmlApplicationContext("./src/main/resources/spring-context.xml");
 
+
         PersonService p = (PersonService)context.getBean("person-bean");
         System.out.println(p.toString());
     }

@@ -16,7 +16,6 @@
         <constructor-arg value="yyyy-MM-dd" />
     </bean>
 
-
     <bean id="person-bean" class="data.InsuredPerson">
     <property name="id" value="1"/>
     <property name="name" value="Enrico"/>
