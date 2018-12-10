@@ -42,7 +42,6 @@ public class ClientServiceTest {
         cs.getDao().delete(10);
     }
 
-
     @Test
     public void springAddClient(){
 
