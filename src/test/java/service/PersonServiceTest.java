@@ -50,12 +50,10 @@ public class PersonServiceTest {
     @Test
     public void springPerson(){
 
-        LocalDate ld=LocalDate.parse("1997-01-03", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
         ApplicationContext context =
                 new FileSystemXmlApplicationContext("./src/main/resources/spring-context.xml");
 
-        PersonService p = (PersonService)context.getBean("person-bean");
+        InsuredPerson p = (InsuredPerson)context.getBean("person-bean");
         System.out.println(p.toString());
     }
 

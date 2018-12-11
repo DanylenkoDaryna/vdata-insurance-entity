@@ -16,22 +16,30 @@
         <constructor-arg value="yyyy-MM-dd" />
     </bean>
 
-
     <bean id="person-bean" class="data.InsuredPerson">
     <property name="id" value="1"/>
     <property name="name" value="Enrico"/>
     <property name="middleName" value="Ilich"/>
     <property name="surname" value="Puska"/>
-        <property name="btdate">
-            <bean factory-bean="dateFormat" factory-method="parse">
-                <constructor-arg value="2010-01-31"/>
-
-            </bean>
-        </property>
-
-    <property name="personalCost" value="234,5"/>
+    <property name="localDateAsString" value="1971-08-20"/>
+    <property name="personalCost" value="234.5"/>
 </bean>
 
 
+    <bean id="contract-bean" class="service.Contract">
+        <property name="id" value="1"/>
+        <property name="acceptDateAsString" value="1971-08-20"/>
+        <property name="startDateAsString" value="1971-03-14"/>
+        <property name="endDateAsString" value="1955-06-08"/>
+        <property name="man">
+            <ref bean="client-bean"/>
+        </property>
+        <property name="personList" >
+            <list>
+                <ref bean="person-bean"/>
+            </list>
+        </property>
+
+    </bean>
 
 </beans>

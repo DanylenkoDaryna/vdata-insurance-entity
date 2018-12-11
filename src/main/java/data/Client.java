@@ -4,6 +4,7 @@ import dict.Type;
 
 
 import java.io.*;
+import java.time.LocalDate;
 
 /**
  * This class is used to contain the main info about Client that initiate the contract: type of person, FIO(first,
@@ -73,6 +74,11 @@ public class Client implements Serializable {
     }
 
 
+    public String localDateAsString() {
+
+
+        return middleName;
+    }
 
     public String getMiddleName() {
         return middleName;
@@ -137,6 +143,8 @@ public class Client implements Serializable {
     public void setBuilding(String building) {
         this.building = building;
     }
+
+
 }
 
 

@@ -19,12 +19,9 @@ public class InsuredPerson implements  Serializable {
     private String name="no";
     private String middleName="no";
     private String surname="no";
-
-    @Autowired
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate btdate;
-
     private double personalCost;
+    private String localDateAsString;
 
 
     /**
@@ -139,5 +136,18 @@ public class InsuredPerson implements  Serializable {
 
     public void setPersonalCost(double personalCost) {
         this.personalCost = personalCost;
+    }
+
+    public String getLocalDateAsString() {
+        return localDateAsString;
+    }
+
+    public void setLocalDateAsString(String localDateAsString) {
+
+        String[]str=localDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setBtdate(ld1);
+        this.localDateAsString = localDateAsString;
     }
 }

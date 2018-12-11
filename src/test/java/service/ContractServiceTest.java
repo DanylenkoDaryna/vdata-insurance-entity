@@ -5,6 +5,8 @@ import data.InsuredPerson;
 import dict.Type;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,5 +76,16 @@ public class ContractServiceTest {
 
         cs.getDao().delete(2);
 
+    }
+
+
+    @Test
+    public void springContract(){
+
+        ApplicationContext context =
+                new FileSystemXmlApplicationContext("./src/main/resources/spring-context.xml");
+
+        Contract p = (Contract)context.getBean("contract-bean");
+        System.out.println(p.toString());
     }
 }

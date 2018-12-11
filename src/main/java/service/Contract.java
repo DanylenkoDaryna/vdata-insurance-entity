@@ -25,6 +25,9 @@ public class Contract implements IContract, Serializable {
     private LocalDate endDate;
     private Client man;
     private List<InsuredPerson> personList=new ArrayList<>();
+    private String acceptDateAsString;
+    private String startDateAsString;
+    private String endDateAsString;
 
     private static final String CSV_SEPARATOR = ";";
     /**
@@ -340,5 +343,67 @@ public class Contract implements IContract, Serializable {
         this.endDate = endDate;
     }
 
+    public String getAcceptDateAsString() {
+        return acceptDateAsString;
+    }
 
+    public void setAcceptDateAsString(String acceptDateAsString) {
+
+        String[]str=acceptDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setAcceptDate(ld1);
+        this.acceptDateAsString = acceptDateAsString;
+    }
+
+    public String getStartDateAsString() {
+        return startDateAsString;
+    }
+
+    public void setStartDateAsString(String startDateAsString) {
+        String[]str=startDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setStartDate(ld1);
+        this.startDateAsString = startDateAsString;
+    }
+
+    public String getEndDateAsString() {
+        return endDateAsString;
+    }
+
+    public void setEndDateAsString(String endDateAsString) {
+
+        String[]str=endDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setEndDate(ld1);
+        this.endDateAsString = endDateAsString;
+    }
+
+
+
+
+
+  /*  public void setAcceptDateAsString(String localDateAsString) {
+        String[]str=localDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setAcceptDate(ld1);
+        this.localDateAsString = localDateAsString;
+    }
+    public void setStartDateAsString(String localDateAsString) {
+        String[]str=localDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setStartDate(ld1);
+        this.localDateAsString = localDateAsString;
+    }
+    public void setEndDateAsString(String localDateAsString) {
+        String[]str=localDateAsString.split("-");
+        LocalDate ld1=LocalDate.of(Integer.parseInt(str[0]),Integer.parseInt(str[1]),
+                Integer.parseInt(str[2]));
+        this.setEndDate(ld1);
+        this.localDateAsString = localDateAsString;
+    }*/
 }
