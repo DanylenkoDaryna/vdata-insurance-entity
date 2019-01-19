@@ -20,14 +20,12 @@ public class ContractDao<Contract>  implements IContractDao {
     private PersonService pService;
     private ArrayList<InsuredPerson> ar=new ArrayList<>();
 
-
     private String sql="";
 
-
-        private Connection createConnection() throws SQLException {
+    private Connection createConnection() throws SQLException {
             connectionFactory =new ConnectionFactory();
             return ConnectionFactory.getMySQLConnection();
-        }
+    }
 
 
 
@@ -79,6 +77,12 @@ public class ContractDao<Contract>  implements IContractDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void create(Object entity) {
+
 
     }
 
