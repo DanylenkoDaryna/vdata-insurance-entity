@@ -1,10 +1,10 @@
 package data;
 
 import dict.Type;
-
+import service.Contract;
 
 import java.io.*;
-import java.time.LocalDate;
+
 
 /**
  * This class is used to contain the main info about Client that initiate the contract: type of person, FIO(first,
@@ -12,6 +12,7 @@ import java.time.LocalDate;
  *
  * @author Daryna
  */
+
 public class Client implements Serializable {
 
     private int id;
@@ -23,6 +24,7 @@ public class Client implements Serializable {
     private String street;
     private String building;
 
+    private Contract contract;
 
 
     public Client(Type pers, String name, String middleName, String surname, String city, String street, String building, int id) {
@@ -64,6 +66,7 @@ public class Client implements Serializable {
         city="";
         street="";
         building="";
+        contract.setMan(this);
     }
 
     @Override
@@ -78,6 +81,16 @@ public class Client implements Serializable {
 
 
         return middleName;
+    }
+    @Override
+    public boolean equals(Object o) {   // Необходима перегрузка метода!!!
+        if (!(o instanceof Client))
+        return false;
+        return ((Client)o).getId() == this.id;
+    }
+    @Override
+    public int hashCode() {// Необходима перегрузка метода!!!
+        return id;
     }
 
     public String getMiddleName() {
@@ -145,6 +158,13 @@ public class Client implements Serializable {
     }
 
 
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
 }
 
 

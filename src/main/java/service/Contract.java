@@ -83,6 +83,11 @@ public class Contract implements IContract, Serializable {
         this.setPersonList((ArrayList<InsuredPerson>) myList);
     }
 
+    public void addPerson(InsuredPerson e) {
+        personList.add(e);
+        e.setContract(this);
+        System.out.println("Adding Person: " + e.toString());
+    }
 
     @Override
     public String toString() {
@@ -92,7 +97,6 @@ public class Contract implements IContract, Serializable {
             return border + "ContractID:\t" + this.getId() + "\nAcceptDate:\t" + this.getAcceptDate().format(form) +
                     "\nStartDate:\t" + this.getStartDate().format(form) + "\nEndDate:\t" + this.getEndDate().format(form)
                     + "\nClient:\t" + this.getMan().toString() + "\nPersonList:" + this.getPersonList();
-
     }
 
     /**
@@ -309,6 +313,7 @@ public class Contract implements IContract, Serializable {
 
     public void setMan(Client man) {
         this.man = man;
+        this.man.setContract(this);
     }
 
     public List<InsuredPerson> getPersonList() {

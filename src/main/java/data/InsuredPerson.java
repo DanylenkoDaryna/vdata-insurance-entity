@@ -2,6 +2,7 @@ package data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import service.Contract;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +24,7 @@ public class InsuredPerson implements  Serializable {
     private double personalCost;
     private String localDateAsString;
 
-
+    private Contract contract;
     /**
      * Constructs a new Insured Person without parameters
      * Used for avoiding nullPointerExeption
@@ -35,6 +36,7 @@ public class InsuredPerson implements  Serializable {
         this.setSurname("Fox");
         this.setBtdate(LocalDate.of(0, 1, 1));
         this.setPersonalCost(0.0);
+        contract.addPerson(this);
     }
 
     /**
@@ -149,5 +151,13 @@ public class InsuredPerson implements  Serializable {
                 Integer.parseInt(str[2]));
         this.setBtdate(ld1);
         this.localDateAsString = localDateAsString;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 }

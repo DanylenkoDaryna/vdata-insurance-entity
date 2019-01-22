@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="service.Contract" table="contract">
+        <id name="id" column="id_contract" type="long">
+            <generator class="native"/>
+        </id>
+        <property name = "acceptDate" column="accept_date"/>
+        <property name = "startDate" column="start_date"/>
+        <property name = "endDate" column="end_date"/>
+        <property name = "man" column="client_id"/>
+        <component name="man" class="data.Client">
+        <one-to-one name="contract" class="service.Contract"/>
+        </component>
+        <set name="personList" table="book_author" inverse="true"
+             lazy="false" cascade="all">
+            <key column="persons_id"/>
+            <one-to-many class="data.InsuredPerson"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

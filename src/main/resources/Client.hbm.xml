@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="data.Client" table="client">
+        <id name="id"  type="integer" column="id_client" >
+    </id>
+    <property name="person" column="type" type="dict.Type"/>
+    <property name="name" column="name" type="string"/>
+    <property name="middleName" column="middle_name" type="string"/>
+    <property name="surname" column="surname" type="string"/>
+    <property name="city" column="city" type="string"/>
+    <property name="street" column="street" type="string"/>
+    <property name="building" column="building" type="string"/>
+        <component name="contract" class="service.Contract" >
+            <one-to-one name="man" class="data.Client"/>
+        </component>
+</class>
+        </hibernate-mapping>
